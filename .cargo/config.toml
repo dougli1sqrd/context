@@ -1,0 +1,24 @@
+[build]
+target = "riscv32imac-unknown-none-elf"
+rustflags = [
+  # Required to obtain backtraces (e.g. when using the "esp-backtrace" crate.)
+  # NOTE: May negatively impact performance of produced code
+  "-C",
+  "force-frame-pointers",
+  "-C",
+  "link-arg=-Tlinkall.x",
+
+  # "-C", "link-arg=-Tmemory.x",
+  # "-C", "link-arg=-Tlink.x",
+  # "-C", "link-args=--print-map",
+]
+
+[profile.release]
+debug = true
+
+[target.riscv32imac-unknown-none-elf]
+runner = "espflash flash --format direct-boot --monitor"
+
+
+[unstable]
+build-std = ["alloc", "core"]

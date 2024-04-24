@@ -1,0 +1,38 @@
+[package]
+name = "context"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+opt-level = 2
+lto       = true
+
+[profile.dev]
+debug     = true # Symbols are nice and they don't increase the size on Flash
+opt-level = "s"
+
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+riscv = "0.11.1"
+# riscv-rt = { version = "0.12.2", features = ["single-hart"] }
+esp32c3 = "0.22.0"
+esp-backtrace = { version = "0.11.0", features = [
+  "esp32c3",
+  "panic-handler",
+  "exception-handler",
+  "println",
+] }
+esp-println = { version = "0.9.0", default-features = false, features = [
+  "esp32c3",
+  "uart"
+#   "print-uart"
+#   "jtag-serial",
+] }
+esp32c3-hal = { features = [
+  "direct-boot",
+], version = "0.13.0" }
+esp-alloc = { version = "0.3.0" }
+
